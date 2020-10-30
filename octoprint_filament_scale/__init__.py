@@ -84,7 +84,7 @@ class Filament_scalePlugin(octoprint.plugin.SettingsPlugin,
 # can be overwritten via __plugin_xyz__ control properties. See the documentation for that.
 __plugin_name__ = "Filament Scale"
 __plugin_pythoncompat__ = ">=3,<4"
-__plugin_version__ = "0.0.1b5"
+__plugin_version__ = "0.0.1b6"
 
 def __plugin_load__():
 	global __plugin_implementation__
