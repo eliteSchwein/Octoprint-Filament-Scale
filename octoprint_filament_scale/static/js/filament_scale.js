@@ -52,10 +52,10 @@ $(function() {
 			if (plugin != "filament_scale") return;
 				
 			self.last_raw_weight = parseInt(message)
-			if (parseInt(message) == 8388608 || parseInt(message) == 8388607){
-				self.printerState.filamentRemainingString("Sensor Not Connected")
-				self.settings.settings.plugins.filament_scale.lastknownweight("Error")
-			} else {
+			//if (parseInt(message) == 8388608 || parseInt(message) == 8388607){
+			//	self.printerState.filamentRemainingString("Sensor Not Connected")
+			//	self.settings.settings.plugins.filament_scale.lastknownweight("Error")
+			//} else {
 				weight = self.getWeight(message)
 				if (Number.isNaN(weight)){
 					error_message = {"tare": self.settings.settings.plugins.filament_scale.tare(),
@@ -71,7 +71,7 @@ $(function() {
 					self.settings.settings.plugins.filament_scale.lastknownweight(weight)
 					self.printerState.filamentRemainingString(self.getOutputWeight(weight))
 				}
-			}
+			//}
 		};
 		self.getWeight = function(weight){
 			return Math.round((parseInt(weight) - self.settings.settings.plugins.filament_scale.tare()) / parseInt(self.settings.settings.plugins.filament_scale.reference_unit()))
