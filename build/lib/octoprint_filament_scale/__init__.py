@@ -8,6 +8,9 @@ import flask
 import threading
 from hx711 import HX711
 import RPi.GPIO as GPIO
+import logging
+
+logger = logging.getLogger(__name__)
 
 class Filament_scalePlugin(octoprint.plugin.SettingsPlugin,
 						   octoprint.plugin.AssetPlugin,
@@ -45,19 +48,24 @@ class Filament_scalePlugin(octoprint.plugin.SettingsPlugin,
 
 	
 	def on_startup(self, host, port):
-		self.hx = HX711(
-            dout_pin=20,
-            pd_sck_pin=21,
-            channel='A',
-            gain=64
-        )
-		self.hx.reset()
-		self.t = octoprint.util.RepeatedTimer(3.0, self.check_weight)
-		self.t.start()
+		try:
+			self.hx = HX711(
+        	    dout_pin=20,
+        	    pd_sck_pin=21,
+        	    channel='A',
+        	    gain=64
+        	)
+			self.hx.reset()
+			self.t = octoprint.util.RepeatedTimer(3.0, self.check_weight)
+			self.t.start()
+		finally:
+			logging.debug("Scale Loaded!")
 		
 	def check_weight(self):
+		self.hx.power_up()
 		v = self.hx.get_raw_data()
 		self._plugin_manager.send_plugin_message(self._identifier, v) 
+		self.hx.power_down()
 		
 	def get_update_information(self):
 		# Define the configuration for your plugin to use with the Software Update
@@ -85,7 +93,7 @@ class Filament_scalePlugin(octoprint.plugin.SettingsPlugin,
 # can be overwritten via __plugin_xyz__ control properties. See the documentation for that.
 __plugin_name__ = "Filament Scale"
 __plugin_pythoncompat__ = ">=3,<4"
-__plugin_version__ = "0.0.1b7"
+__plugin_version__ = "0.0.1b8"
 
 def __plugin_load__():
 	global __plugin_implementation__

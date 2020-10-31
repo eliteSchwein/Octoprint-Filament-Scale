@@ -1,4 +1,3 @@
-dist/Filament_Scale-0.0.1b7-py3.8.egg
 Filament_Scale.egg-info/dependency_links.txt
 Filament_Scale.egg-info/entry_points.txt
 Filament_Scale.egg-info/not-zip-safe
@@ -6,3 +5,4 @@ Filament_Scale.egg-info/PKG-INFO
 Filament_Scale.egg-info/requires.txt
 Filament_Scale.egg-info/SOURCES.txt
 Filament_Scale.egg-info/top_level.txt
+dist/*-py3.8.egg
