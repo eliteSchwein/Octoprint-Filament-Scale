@@ -53,7 +53,7 @@ class Filament_scalePlugin(octoprint.plugin.SettingsPlugin,
         	    dout_pin=20,
         	    pd_sck_pin=21,
         	    channel='A',
-        	    gain=128
+        	    gain=64
         	)
 			self.hx.reset()
 			self.t = octoprint.util.RepeatedTimer(3.0, self.check_weight)
@@ -63,7 +63,8 @@ class Filament_scalePlugin(octoprint.plugin.SettingsPlugin,
 		
 	def check_weight(self):
 		self.hx.power_up()
-		v = self.hx.get_raw_data()
+		v = self.hx.get_raw_data(times=3)[0]
+		logging.debug("Raw Scale value: "+str(v))
 		self._plugin_manager.send_plugin_message(self._identifier, v) 
 		self.hx.power_down()
 		
@@ -93,7 +94,7 @@ class Filament_scalePlugin(octoprint.plugin.SettingsPlugin,
 # can be overwritten via __plugin_xyz__ control properties. See the documentation for that.
 __plugin_name__ = "Filament Scale"
 __plugin_pythoncompat__ = ">=3,<4"
-__plugin_version__ = "0.0.1b9"
+__plugin_version__ = "0.0.1b10"
 
 def __plugin_load__():
 	global __plugin_implementation__
