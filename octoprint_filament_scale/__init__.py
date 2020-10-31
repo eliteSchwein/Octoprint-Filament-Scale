@@ -53,7 +53,7 @@ class Filament_scalePlugin(octoprint.plugin.SettingsPlugin,
         	    dout_pin=20,
         	    pd_sck_pin=21,
         	    channel='A',
-        	    gain=64
+        	    gain=128
         	)
 			self.hx.reset()
 			self.t = octoprint.util.RepeatedTimer(3.0, self.check_weight)
